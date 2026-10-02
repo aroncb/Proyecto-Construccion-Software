@@ -10,6 +10,7 @@ public class Usuario {
     private String clave;
     private String rol;
     private Boolean activo;
+    private Integer pedidosEnCurso; // solo para motorizados: pedidos ASIGNADO o ACEPTADO
 
     public Usuario() {
     }
@@ -79,5 +80,13 @@ public class Usuario {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public Integer getPedidosEnCurso() {
+        return pedidosEnCurso;
+    }
+
+    public void setPedidosEnCurso(Integer pedidosEnCurso) {
+        this.pedidosEnCurso = pedidosEnCurso;
     }
 }

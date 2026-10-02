@@ -28,6 +28,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.obtenerPorId(id);
     }
 
+    @Override
+    public List<Usuario> listarMotorizadosActivos() {
+        return usuarioRepository.listarMotorizadosActivos();
+    }
+
     // Regla: desde el sistema solo se registran motorizados (el administrador ya existe)
     @Override
     public String registrarMotorizado(Usuario usuario) {

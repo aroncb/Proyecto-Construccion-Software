@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     Usuario obtenerPorId(int id);
 
+    List<Usuario> listarMotorizadosActivos();
+
     String registrarMotorizado(Usuario usuario);
 
     String actualizar(Usuario usuario);

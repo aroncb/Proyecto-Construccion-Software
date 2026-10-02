@@ -33,3 +33,19 @@ INSERT INTO pedido (cliente_nombre, cliente_telefono, cliente_direccion, total, 
 VALUES ('Jorge Huamán', '956333444', 'Av. Huancavelica 1020, Huancayo', 28.50, '87654321', 'ACEPTADO', 2);
 INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (2, 2, 1, 16.50, 16.50);
 INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (2, 5, 1, 12.00, 12.00);
+
+-- Código 3: Pedro Díaz lo rechazó (para probar Reasignar)
+INSERT INTO pedido (cliente_nombre, cliente_telefono, cliente_direccion, total, comprobante, estado, id_motorizado)
+VALUES ('Rosa Pérez', '912555666', 'Calle Real 870, Huancayo', 20.00, '11223344', 'RECHAZADO', 3);
+INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (3, 4, 2, 6.00, 12.00);
+INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (3, 3, 1, 8.00, 8.00);
+
+-- Código 4: asignado a José Rojas, todavía sin aceptar
+INSERT INTO pedido (cliente_nombre, cliente_telefono, cliente_direccion, total, comprobante, estado, id_motorizado)
+VALUES ('Luis Cárdenas', '934777888', 'Av. Mariscal Castilla 2100, El Tambo', 18.00, '55667788', 'ASIGNADO', 4);
+INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (4, 1, 1, 18.00, 18.00);
+
+-- Código 5: entregado por Luis Gómez
+INSERT INTO pedido (cliente_nombre, cliente_telefono, cliente_direccion, total, comprobante, estado, id_motorizado)
+VALUES ('Ana Torres', '945999000', 'Jr. Puno 300, Huancayo', 24.00, '99887766', 'ENTREGADO', 2);
+INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, precio_unitario, subtotal) VALUES (5, 5, 2, 12.00, 24.00);

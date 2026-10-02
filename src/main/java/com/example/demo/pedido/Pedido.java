@@ -73,6 +73,38 @@ public class Pedido {
         }
     }
 
+    // Texto del estado para el administrador
+    public String getEstadoAdmin() {
+        if (estado == null) {
+            return "";
+        }
+        switch (estado) {
+            case PENDIENTE:
+                return "Por asignar";
+            case ASIGNADO:
+                return "Esperando aceptación";
+            case ACEPTADO:
+                return "En camino";
+            case RECHAZADO:
+                return "Rechazado, reasignar";
+            case ENTREGADO:
+                return "Entregado";
+            default:
+                return estado;
+        }
+    }
+
+    // Clase CSS del estado (color de la etiqueta)
+    public String getEstadoClase() {
+        if (ENTREGADO.equals(estado)) {
+            return "estado-ok";
+        }
+        if (RECHAZADO.equals(estado) || PENDIENTE.equals(estado)) {
+            return "estado-off";
+        }
+        return "estado-proceso";
+    }
+
     public String getFechaTexto() {
         return fecha == null ? "" : fecha.format(FORMATO_FECHA);
     }
