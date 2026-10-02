@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.producto.Producto;
 import com.example.demo.producto.ProductoService;
+import com.example.demo.usuario.Usuario;
+import com.example.demo.usuario.UsuarioService;
 
 // Service (clase Impl): reglas de negocio de pedidos
 @Service
@@ -18,10 +20,13 @@ public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final ProductoService productoService;
+    private final UsuarioService usuarioService;
 
-    public PedidoServiceImpl(PedidoRepository pedidoRepository, ProductoService productoService) {
+    public PedidoServiceImpl(PedidoRepository pedidoRepository, ProductoService productoService,
+                             UsuarioService usuarioService) {
         this.pedidoRepository = pedidoRepository;
         this.productoService = productoService;
+        this.usuarioService = usuarioService;
     }
 
     @Override
@@ -114,5 +119,71 @@ public class PedidoServiceImpl implements PedidoService {
             pedido.setDetalles(pedidoRepository.listarDetalles(pedido.getId()));
         }
         return pedido;
+    }
+
+    // ----- Administrador -----
+
+    @Override
+    public List<Pedido> listar(String estado) {
+        if (estado == null || estado.isBlank()) {
+            return pedidoRepository.listar();
+        }
+        return pedidoRepository.listarPorEstado(estado);
+    }
+
+    @Override
+    public Pedido obtenerConDetalle(int id) {
+        Pedido pedido = pedidoRepository.obtenerPorId(id);
+        if (pedido != null) {
+            pedido.setDetalles(pedidoRepository.listarDetalles(id));
+        }
+        return pedido;
+    }
+
+    // Regla: solo se asigna un pedido PENDIENTE a un motorizado activo
+    @Override
+    public String asignarMotorizado(int idPedido, Integer idMotorizado) {
+        String error = validarMotorizado(idMotorizado);
+        if (error != null) {
+            return error;
+        }
+        int filas = pedidoRepository.asignarMotorizado(idPedido, idMotorizado);
+        if (filas == 0) {
+            return "Este pedido ya no está pendiente; revisa su estado actual.";
+        }
+        return null;
+    }
+
+    // Regla: se reasigna si el motorizado lo rechazó o no lo acepta (enfermo, sin batería, etc.)
+    // y debe ir a un motorizado distinto al actual
+    @Override
+    public String reasignarMotorizado(int idPedido, Integer idMotorizado) {
+        String error = validarMotorizado(idMotorizado);
+        if (error != null) {
+            return error;
+        }
+        Pedido pedido = pedidoRepository.obtenerPorId(idPedido);
+        if (pedido == null) {
+            return "No se encontró el pedido.";
+        }
+        if (idMotorizado.equals(pedido.getIdMotorizado())) {
+            return "Elige un motorizado distinto al que tiene el pedido ahora.";
+        }
+        int filas = pedidoRepository.reasignarMotorizado(idPedido, idMotorizado);
+        if (filas == 0) {
+            return "Solo se reasignan pedidos rechazados o que aún no han sido aceptados.";
+        }
+        return null;
+    }
+
+    private String validarMotorizado(Integer idMotorizado) {
+        if (idMotorizado == null) {
+            return "Elige un motorizado.";
+        }
+        Usuario motorizado = usuarioService.obtenerPorId(idMotorizado);
+        if (motorizado == null || !"MOTORIZADO".equals(motorizado.getRol()) || !motorizado.getActivo()) {
+            return "El motorizado elegido no está activo.";
+        }
+        return null;
     }
 }

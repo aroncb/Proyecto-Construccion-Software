@@ -40,6 +40,22 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return resultado.isEmpty() ? null : resultado.get(0);
     }
 
+    // Motorizados activos con la cantidad de pedidos que tienen en curso,
+    // ordenados del menos ocupado al más ocupado (ayuda al admin a repartir)
+    @Override
+    public List<Usuario> listarMotorizadosActivos() {
+        String sql = "SELECT u.id, u.nombre, u.apellido, u.username, u.clave, u.rol, u.activo, "
+                + "(SELECT COUNT(*) FROM pedido p WHERE p.id_motorizado = u.id "
+                + " AND p.estado IN ('ASIGNADO', 'ACEPTADO')) AS en_curso "
+                + "FROM usuario u WHERE u.rol = 'MOTORIZADO' AND u.activo = TRUE "
+                + "ORDER BY en_curso, u.nombre";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Usuario usuario = usuarioRowMapper.mapRow(rs, rowNum);
+            usuario.setPedidosEnCurso(rs.getInt("en_curso"));
+            return usuario;
+        });
+    }
+
     // Cuenta cuántos usuarios tienen ese username, sin contar al usuario que se está editando
     @Override
     public boolean existeUsername(String username, int excluirId) {

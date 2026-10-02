@@ -18,6 +18,7 @@
         <a href="${pageContext.request.contextPath}/admin">Inicio</a>
         <a href="${pageContext.request.contextPath}/categoria/list">Categorías</a>
         <a href="${pageContext.request.contextPath}/producto/list">Productos</a>
+        <a href="${pageContext.request.contextPath}/admin/pedido/list">Pedidos</a>
         <a href="${pageContext.request.contextPath}/usuario/list">Usuarios</a>
     </nav>
     <span class="usuario">Usuario: Administrador</span>

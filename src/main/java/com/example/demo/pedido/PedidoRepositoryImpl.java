@@ -102,6 +102,41 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
+    public List<Pedido> listar() {
+        String sql = SELECT_BASE + "ORDER BY p.fecha DESC, p.id DESC";
+        return jdbcTemplate.query(sql, pedidoRowMapper);
+    }
+
+    @Override
+    public List<Pedido> listarPorEstado(String estado) {
+        String sql = SELECT_BASE + "WHERE p.estado = ? ORDER BY p.fecha DESC, p.id DESC";
+        return jdbcTemplate.query(sql, pedidoRowMapper, estado);
+    }
+
+    @Override
+    public Pedido obtenerPorId(int id) {
+        String sql = SELECT_BASE + "WHERE p.id = ?";
+        List<Pedido> resultado = jdbcTemplate.query(sql, pedidoRowMapper, id);
+        return resultado.isEmpty() ? null : resultado.get(0);
+    }
+
+    // Solo se asigna si el pedido sigue PENDIENTE
+    @Override
+    public int asignarMotorizado(int idPedido, int idMotorizado) {
+        String sql = "UPDATE pedido SET id_motorizado = ?, estado = 'ASIGNADO' "
+                + "WHERE id = ? AND estado = 'PENDIENTE'";
+        return jdbcTemplate.update(sql, idMotorizado, idPedido);
+    }
+
+    // Se reasigna si el motorizado lo rechazó o aún no lo acepta
+    @Override
+    public int reasignarMotorizado(int idPedido, int idMotorizado) {
+        String sql = "UPDATE pedido SET id_motorizado = ?, estado = 'ASIGNADO' "
+                + "WHERE id = ? AND estado IN ('RECHAZADO', 'ASIGNADO')";
+        return jdbcTemplate.update(sql, idMotorizado, idPedido);
+    }
+
+    @Override
     public List<DetallePedido> listarDetalles(int idPedido) {
         String sql = "SELECT d.id, d.id_pedido, d.id_producto, pr.nombre AS producto_nombre, "
                 + "d.cantidad, d.precio_unitario, d.subtotal "

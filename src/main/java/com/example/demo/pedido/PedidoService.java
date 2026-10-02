@@ -19,4 +19,16 @@ public interface PedidoService {
 
     // Busca el pedido con su detalle; null si el código y el teléfono no coinciden
     Pedido buscarParaSeguimiento(int codigo, String telefono);
+
+    // ----- Administrador -----
+
+    // Si estado viene vacío, lista todos
+    List<Pedido> listar(String estado);
+
+    Pedido obtenerConDetalle(int id);
+
+    // Devuelven null si salió bien, o el mensaje de error
+    String asignarMotorizado(int idPedido, Integer idMotorizado);
+
+    String reasignarMotorizado(int idPedido, Integer idMotorizado);
 }

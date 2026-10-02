@@ -490,3 +490,32 @@ textarea {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* ---------- Filtros de pedidos ---------- */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.filtros a {
+    padding: 6px 14px;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    background: var(--blanco);
+    color: var(--tinta);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.filtros a.activo {
+    background: var(--albahaca);
+    border-color: var(--albahaca);
+    color: var(--blanco);
+}
+
+.aviso + .pedido-datos {
+    margin-top: 16px;
+}

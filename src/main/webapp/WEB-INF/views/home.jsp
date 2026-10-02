@@ -5,10 +5,20 @@
 
 <section class="bienvenida">
     <h1>Panel del administrador</h1>
-    <p>Gestiona el catálogo de comida saludable que verán los clientes al hacer su pedido.</p>
+    <p>Gestiona los pedidos, el catálogo y a los motorizados de Nutribubble.</p>
 </section>
 
 <section class="paneles">
+    <article class="panel">
+        <h2>Pedidos</h2>
+        <p>Revisa los pedidos de los clientes, verifica el Yape y asígnalos a un motorizado.</p>
+        <div class="panel-acciones">
+            <a class="btn" href="${pageContext.request.contextPath}/admin/pedido/list?estado=PENDIENTE">Por asignar</a>
+            <a class="btn btn-secundario" href="${pageContext.request.contextPath}/admin/pedido/list?estado=RECHAZADO">Rechazados</a>
+            <a class="btn btn-secundario" href="${pageContext.request.contextPath}/admin/pedido/list">Todos</a>
+        </div>
+    </article>
+
     <article class="panel">
         <h2>Categorías</h2>
         <p>Organiza los productos del catálogo por tipo.</p>
