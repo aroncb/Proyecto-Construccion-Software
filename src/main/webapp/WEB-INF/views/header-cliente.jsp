@@ -18,6 +18,6 @@
         <a href="${pageContext.request.contextPath}/catalogo">Catálogo</a>
         <a href="${pageContext.request.contextPath}/pedido/seguimiento">Mi pedido</a>
     </nav>
-    <a class="usuario" href="${pageContext.request.contextPath}/admin">Ingreso del personal</a>
+    <a class="usuario" href="${pageContext.request.contextPath}/login">Ingreso del personal</a>
 </header>
 <main class="contenido">

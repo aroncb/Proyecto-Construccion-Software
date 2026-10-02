@@ -490,3 +490,91 @@ textarea {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+/* ---------- Filtros de pedidos ---------- */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.filtros a {
+    padding: 6px 14px;
+    border: 1px solid var(--linea);
+    border-radius: 999px;
+    background: var(--blanco);
+    color: var(--tinta);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.filtros a.activo {
+    background: var(--albahaca);
+    border-color: var(--albahaca);
+    color: var(--blanco);
+}
+
+.aviso + .pedido-datos {
+    margin-top: 16px;
+}
+
+/* ---------- Sesión ---------- */
+.sesion {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+}
+
+.sesion a {
+    font-weight: 700;
+}
+
+/* ---------- Pedidos del motorizado ---------- */
+.entregas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.entrega {
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-left: 6px solid var(--mango);
+    border-radius: 6px;
+    padding: 18px 20px;
+}
+
+.entrega-en-camino {
+    border-left-color: var(--albahaca);
+}
+
+.entrega-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.entrega-cabecera h2 {
+    margin: 0;
+}
+
+.entrega p {
+    margin: 0 0 4px;
+}
+
+.entrega-total {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--albahaca-oscura);
+    margin-bottom: 14px !important;
+}
+
+.subtitulo {
+    margin: 8px 0 14px;
+}
