@@ -28,6 +28,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.obtenerPorId(id);
     }
 
+    // Regla: solo ingresan usuarios activos con la clave correcta
+    @Override
+    public Usuario autenticar(String username, String clave) {
+        if (username == null || clave == null) {
+            return null;
+        }
+        Usuario usuario = usuarioRepository.obtenerPorUsername(username.trim().toLowerCase());
+        if (usuario == null || !usuario.getActivo() || !usuario.getClave().equals(clave)) {
+            return null;
+        }
+        return usuario;
+    }
+
     @Override
     public List<Usuario> listarMotorizadosActivos() {
         return usuarioRepository.listarMotorizadosActivos();

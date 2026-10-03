@@ -24,4 +24,13 @@ public interface PedidoRepository {
     int asignarMotorizado(int idPedido, int idMotorizado);
 
     int reasignarMotorizado(int idPedido, int idMotorizado);
+
+    // ----- Motorizado -----
+
+    List<Pedido> listarActivosPorMotorizado(int idMotorizado);
+
+    List<Pedido> listarEntregadosPorMotorizado(int idMotorizado);
+
+    // Cambia el estado solo si el pedido es de ese motorizado y está en el estado esperado
+    int cambiarEstadoPorMotorizado(int idPedido, int idMotorizado, String estadoActual, String estadoNuevo);
 }

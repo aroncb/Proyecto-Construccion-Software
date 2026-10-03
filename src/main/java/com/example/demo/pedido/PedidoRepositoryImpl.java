@@ -136,6 +136,28 @@ public class PedidoRepositoryImpl implements PedidoRepository {
         return jdbcTemplate.update(sql, idMotorizado, idPedido);
     }
 
+    // ----- Motorizado -----
+
+    @Override
+    public List<Pedido> listarActivosPorMotorizado(int idMotorizado) {
+        String sql = SELECT_BASE + "WHERE p.id_motorizado = ? AND p.estado IN ('ASIGNADO', 'ACEPTADO') "
+                + "ORDER BY p.fecha, p.id";
+        return jdbcTemplate.query(sql, pedidoRowMapper, idMotorizado);
+    }
+
+    @Override
+    public List<Pedido> listarEntregadosPorMotorizado(int idMotorizado) {
+        String sql = SELECT_BASE + "WHERE p.id_motorizado = ? AND p.estado = 'ENTREGADO' "
+                + "ORDER BY p.fecha DESC, p.id DESC";
+        return jdbcTemplate.query(sql, pedidoRowMapper, idMotorizado);
+    }
+
+    @Override
+    public int cambiarEstadoPorMotorizado(int idPedido, int idMotorizado, String estadoActual, String estadoNuevo) {
+        String sql = "UPDATE pedido SET estado = ? WHERE id = ? AND id_motorizado = ? AND estado = ?";
+        return jdbcTemplate.update(sql, estadoNuevo, idPedido, idMotorizado, estadoActual);
+    }
+
     @Override
     public List<DetallePedido> listarDetalles(int idPedido) {
         String sql = "SELECT d.id, d.id_pedido, d.id_producto, pr.nombre AS producto_nombre, "

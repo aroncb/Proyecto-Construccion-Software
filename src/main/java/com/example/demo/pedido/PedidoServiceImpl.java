@@ -176,6 +176,49 @@ public class PedidoServiceImpl implements PedidoService {
         return null;
     }
 
+    // ----- Motorizado -----
+
+    @Override
+    public List<Pedido> listarActivosDeMotorizado(int idMotorizado) {
+        return pedidoRepository.listarActivosPorMotorizado(idMotorizado);
+    }
+
+    @Override
+    public List<Pedido> listarEntregadosDeMotorizado(int idMotorizado) {
+        return pedidoRepository.listarEntregadosPorMotorizado(idMotorizado);
+    }
+
+    // Regla: un motorizado solo ve los pedidos que le asignaron
+    @Override
+    public Pedido obtenerParaMotorizado(int idPedido, int idMotorizado) {
+        Pedido pedido = obtenerConDetalle(idPedido);
+        if (pedido == null || pedido.getIdMotorizado() == null || pedido.getIdMotorizado() != idMotorizado) {
+            return null;
+        }
+        return pedido;
+    }
+
+    // ASIGNADO -> ACEPTADO
+    @Override
+    public String aceptarPedido(int idPedido, int idMotorizado) {
+        int filas = pedidoRepository.cambiarEstadoPorMotorizado(idPedido, idMotorizado, Pedido.ASIGNADO, Pedido.ACEPTADO);
+        return filas == 0 ? "Este pedido ya no está esperando tu respuesta." : null;
+    }
+
+    // ASIGNADO -> RECHAZADO (se guarda quién lo rechazó para que el admin lo reasigne a otro)
+    @Override
+    public String rechazarPedido(int idPedido, int idMotorizado) {
+        int filas = pedidoRepository.cambiarEstadoPorMotorizado(idPedido, idMotorizado, Pedido.ASIGNADO, Pedido.RECHAZADO);
+        return filas == 0 ? "Este pedido ya no está esperando tu respuesta." : null;
+    }
+
+    // ACEPTADO -> ENTREGADO
+    @Override
+    public String confirmarEntrega(int idPedido, int idMotorizado) {
+        int filas = pedidoRepository.cambiarEstadoPorMotorizado(idPedido, idMotorizado, Pedido.ACEPTADO, Pedido.ENTREGADO);
+        return filas == 0 ? "Solo puedes entregar un pedido que aceptaste." : null;
+    }
+
     private String validarMotorizado(Integer idMotorizado) {
         if (idMotorizado == null) {
             return "Elige un motorizado.";

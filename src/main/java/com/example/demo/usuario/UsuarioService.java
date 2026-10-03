@@ -11,6 +11,9 @@ public interface UsuarioService {
 
     Usuario obtenerPorId(int id);
 
+    // Devuelve el usuario si el username y la clave son correctos y está activo; si no, null
+    Usuario autenticar(String username, String clave);
+
     List<Usuario> listarMotorizadosActivos();
 
     String registrarMotorizado(Usuario usuario);

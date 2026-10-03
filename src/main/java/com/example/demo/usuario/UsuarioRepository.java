@@ -9,6 +9,8 @@ public interface UsuarioRepository {
 
     Usuario obtenerPorId(int id);
 
+    Usuario obtenerPorUsername(String username);
+
     List<Usuario> listarMotorizadosActivos();
 
     boolean existeUsername(String username, int excluirId);

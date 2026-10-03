@@ -11,15 +11,11 @@
 </head>
 <body>
 <header class="navbar">
-    <a class="marca" href="${pageContext.request.contextPath}/admin">
+    <a class="marca" href="${pageContext.request.contextPath}/motorizado/pedidos">
         <span class="marca-burbuja"></span>Nutribubble
     </a>
     <nav class="menu">
-        <a href="${pageContext.request.contextPath}/admin">Inicio</a>
-        <a href="${pageContext.request.contextPath}/categoria/list">Categorías</a>
-        <a href="${pageContext.request.contextPath}/producto/list">Productos</a>
-        <a href="${pageContext.request.contextPath}/admin/pedido/list">Pedidos</a>
-        <a href="${pageContext.request.contextPath}/usuario/list">Usuarios</a>
+        <a href="${pageContext.request.contextPath}/motorizado/pedidos">Mis pedidos</a>
     </nav>
     <div class="sesion">
         <span class="usuario">${sessionScope.usuarioSesion.nombre} ${sessionScope.usuarioSesion.apellido}</span>

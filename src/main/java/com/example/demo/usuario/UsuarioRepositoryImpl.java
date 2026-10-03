@@ -40,6 +40,13 @@ public class UsuarioRepositoryImpl implements UsuarioRepository {
         return resultado.isEmpty() ? null : resultado.get(0);
     }
 
+    @Override
+    public Usuario obtenerPorUsername(String username) {
+        String sql = "SELECT id, nombre, apellido, username, clave, rol, activo FROM usuario WHERE username = ?";
+        List<Usuario> resultado = jdbcTemplate.query(sql, usuarioRowMapper, username);
+        return resultado.isEmpty() ? null : resultado.get(0);
+    }
+
     // Motorizados activos con la cantidad de pedidos que tienen en curso,
     // ordenados del menos ocupado al más ocupado (ayuda al admin a repartir)
     @Override
